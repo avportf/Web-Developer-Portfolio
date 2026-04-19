@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Portfolio from "@/pages/Portfolio";
 import Languages from "@/pages/Languages";
+import Submissions from "@/pages/Submissions";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useEffect } from "react";
 
@@ -15,6 +16,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Portfolio} />
       <Route path="/languages" component={Languages} />
+      <Route path="/submissions" component={Submissions} />
       <Route component={NotFound} />
     </Switch>
   );
