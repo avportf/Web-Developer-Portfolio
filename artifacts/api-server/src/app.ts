@@ -1,9 +1,12 @@
 import express, { type Express } from "express";
 import cors from "cors";
-import pinoHttp from "pino-http";
 import type { IncomingMessage, ServerResponse } from "http";
 import router from "./routes";
 import { logger } from "./lib/logger";
+
+// pino-http uses `export =` (CommonJS) — cast avoids TS2349 across different moduleResolution configs
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-explicit-any
+const pinoHttp: (...args: any[]) => any = require("pino-http");
 
 const app: Express = express();
 
