@@ -1,0 +1,26 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "MA9vC6_3G-OdI7S_uTs98"
+uri = "file://artifacts/portfolio/src/assets/hero-bg.png"
+type = "image"
+title = "Hero background abstract code"
+
+[[generated]]
+id = "SSZgiKla4iqgkPTT8njJX"
+uri = "file://artifacts/portfolio/src/assets/project-1.png"
+type = "image"
+title = "Dashboard Project Screenshot"
+
+[[generated]]
+id = "joVTpov4l3msUvY8eCSL8"
+uri = "file://artifacts/portfolio/src/assets/project-2.png"
+type = "image"
+title = "Ecommerce Project Screenshot"
+
+[[generated]]
+id = "mUGoT_k3sRAxyncCWh18O"
+uri = "file://artifacts/portfolio/src/assets/project-3.png"
+type = "image"
+title = "Mobile App Project Screenshot"
