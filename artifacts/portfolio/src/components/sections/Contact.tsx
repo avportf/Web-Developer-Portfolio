@@ -9,37 +9,31 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Send } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const formSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+  name: z.string().min(2),
+  email: z.string().email(),
+  message: z.string().min(10),
 });
 
 export default function Contact() {
+  const { t } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-    },
+    defaultValues: { name: '', email: '', message: '' },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    // Simulate API call
     setTimeout(() => {
       console.log(values);
       setIsSubmitting(false);
       form.reset();
-      toast({
-        title: "Message sent successfully!",
-        description: "Thanks for reaching out. I'll get back to you soon.",
-      });
+      toast({ title: t.contact.successTitle, description: t.contact.successDesc });
     }, 1500);
   }
 
@@ -52,18 +46,13 @@ export default function Contact() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-primary font-mono mb-4 text-sm tracking-widest">05. What's Next?</p>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-            Get In Touch
-          </h2>
-          <p className="text-muted-foreground text-lg mb-12 max-w-xl mx-auto">
-            Although I'm not currently looking for any new opportunities, my inbox is always open. 
-            Whether you have a question or just want to say hi, I'll try my best to get back to you!
-          </p>
+          <p className="text-primary font-mono mb-4 text-sm tracking-widest">05. {t.contact.tagline}</p>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">{t.contact.title}</h2>
+          <p className="text-muted-foreground text-lg mb-12 max-w-xl mx-auto">{t.contact.description}</p>
 
           <div className="bg-card border border-border/50 rounded-xl p-8 md:p-12 text-left shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0"></div>
-            
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0" />
+
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
@@ -72,9 +61,9 @@ export default function Contact() {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="font-mono text-xs uppercase tracking-wider">Name</FormLabel>
+                        <FormLabel className="font-mono text-xs uppercase tracking-wider">{t.contact.nameLabel}</FormLabel>
                         <FormControl>
-                          <Input placeholder="John Doe" {...field} className="bg-background border-border/50 focus-visible:ring-primary" data-testid="input-contact-name" />
+                          <Input placeholder={t.contact.namePlaceholder} {...field} className="bg-background border-border/50 focus-visible:ring-primary" data-testid="input-contact-name" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -85,9 +74,9 @@ export default function Contact() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="font-mono text-xs uppercase tracking-wider">Email</FormLabel>
+                        <FormLabel className="font-mono text-xs uppercase tracking-wider">{t.contact.emailLabel}</FormLabel>
                         <FormControl>
-                          <Input placeholder="john@example.com" type="email" {...field} className="bg-background border-border/50 focus-visible:ring-primary" data-testid="input-contact-email" />
+                          <Input placeholder={t.contact.emailPlaceholder} type="email" {...field} className="bg-background border-border/50 focus-visible:ring-primary" data-testid="input-contact-email" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -99,12 +88,12 @@ export default function Contact() {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-mono text-xs uppercase tracking-wider">Message</FormLabel>
+                      <FormLabel className="font-mono text-xs uppercase tracking-wider">{t.contact.messageLabel}</FormLabel>
                       <FormControl>
-                        <Textarea 
-                          placeholder="Hello, I'd like to talk about..." 
-                          className="min-h-[150px] bg-background border-border/50 focus-visible:ring-primary resize-y" 
-                          {...field} 
+                        <Textarea
+                          placeholder={t.contact.messagePlaceholder}
+                          className="min-h-[150px] bg-background border-border/50 focus-visible:ring-primary resize-y"
+                          {...field}
                           data-testid="input-contact-message"
                         />
                       </FormControl>
@@ -112,16 +101,16 @@ export default function Contact() {
                     </FormItem>
                   )}
                 />
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="w-full font-mono group hover-elevate"
                   disabled={isSubmitting}
                   data-testid="button-contact-submit"
                 >
                   {isSubmitting ? (
-                    <span className="flex items-center gap-2">Sending... <span className="animate-spin text-lg">⟳</span></span>
+                    <span className="flex items-center gap-2">{t.contact.sending} <span className="animate-spin text-lg">⟳</span></span>
                   ) : (
-                    <span className="flex items-center gap-2">Say Hello <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /></span>
+                    <span className="flex items-center gap-2">{t.contact.submit} <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /></span>
                   )}
                 </Button>
               </form>

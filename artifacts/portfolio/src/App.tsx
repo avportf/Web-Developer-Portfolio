@@ -4,6 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Portfolio from "@/pages/Portfolio";
+import Languages from "@/pages/Languages";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useEffect } from "react";
 
 const queryClient = new QueryClient();
@@ -12,13 +14,13 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Portfolio} />
+      <Route path="/languages" component={Languages} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
 function App() {
-  // Force dark mode for the portfolio
   useEffect(() => {
     document.documentElement.classList.add('dark');
   }, []);
@@ -26,10 +28,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
+        <LanguageProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <Router />
+          </WouterRouter>
+          <Toaster />
+        </LanguageProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
